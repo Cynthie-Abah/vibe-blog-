@@ -1,41 +1,34 @@
 import * as React from "react";
-import ReactMarkdown from "react-markdown";
-import type { Components } from "react-markdown";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeShiki from "@shikijs/rehype";
-import type { PluggableList } from "unified";
 
-/**
- * Reusable Markdown renderer configuration. Since the project uses the edge
- * runtime, we use react-markdown with rehype plugins instead of a heavy runtime
- * MDX compiler. This gives us syntax highlighting, GitHub-flavored Markdown,
- * and heading anchors without sacrificing build or runtime performance.
- */
-export const markdownPlugins = {
-  remarkPlugins: [remarkGfm],
-  rehypePlugins: [
-    rehypeSlug,
-    [rehypeAutolinkHeadings, { behavior: "wrap", properties: { className: ["heading-anchor"] } }],
-    [rehypeShiki, { theme: "github-dark" }],
-  ] satisfies PluggableList,
-};
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkRehype)
+  .use(rehypeSlug)
+  .use(rehypeAutolinkHeadings, { behavior: "wrap", properties: { className: ["heading-anchor"] } })
+  .use(rehypeShiki, { theme: "github-dark" })
+  .use(rehypeStringify);
 
-export function MarkdownRenderer({
+export async function MarkdownRenderer({
   children,
-  components,
+  className,
 }: {
   children: string;
-  components?: Components;
+  className?: string;
 }) {
+  const html = await processor.process(children);
   return (
-    <ReactMarkdown
-      remarkPlugins={markdownPlugins.remarkPlugins}
-      rehypePlugins={markdownPlugins.rehypePlugins as PluggableList}
-      components={components}
-    >
-      {children}
-    </ReactMarkdown>
+    <div
+      className={className}
+      dangerouslySetInnerHTML={{ __html: String(html) }}
+    />
   );
 }
