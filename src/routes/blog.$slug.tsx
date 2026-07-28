@@ -130,10 +130,11 @@ function BlogPostPage() {
         )}
 
         <div className="grid gap-10 lg:grid-cols-[1fr_240px]">
-          <div className="prose-custom">
-            <MarkdownRenderer components={mdxComponents}>{post.content}</MarkdownRenderer>
-          </div>
+          <MarkdownRenderer className="prose-custom">
+            {post.content}
+          </MarkdownRenderer>
           <aside className="hidden lg:block">
+
             <div className="sticky top-24 space-y-6">
               <TOC items={post.toc} />
             </div>
