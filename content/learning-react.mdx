@@ -1,0 +1,70 @@
+---
+title: How I Learned React
+description: The path from copying snippets to understanding React's mental model, hooks, and component design.
+date: 2026-07-15
+tags:
+  - React
+  - TypeScript
+  - Learning
+cover: learning-react.jpg
+featured: true
+category: Engineering
+---
+
+# How I Learned React
+
+React was not my first framework, but it was the one that changed how I think about user interfaces. Moving from jQuery-style DOM manipulation to a declarative component model felt like learning to program all over again.
+
+## The mental shift
+
+The hardest part was not the syntax. It was letting go of the idea that I should manually update the DOM. In React, you describe what the UI should look like for a given state, and React figures out the changes.
+
+Three ideas that unlocked everything:
+
+- **Components** — small, reusable pieces of UI that own their own data.
+- **Props** — the contract a component exposes to its parent.
+- **State** — data that changes over time and causes re-renders.
+
+## Hooks changed everything
+
+When hooks arrived, the old class component patterns disappeared overnight. `useState`, `useEffect`, and `useContext` gave me the tools to build complex behavior inside simple functions.
+
+```tsx
+import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount((c) => c + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+But hooks also come with rules. The order must be consistent, and they can only be called inside React components or custom hooks. The React linter and DevTools helped me internalize those rules quickly.
+
+## My learning roadmap
+
+1. Build small UI pieces with JSX and props.
+2. Add state with `useState` and handle events.
+3. Fetch data with `useEffect` and clean up subscriptions.
+4. Share state with context or lift state up.
+5. Compose custom hooks for reusable logic.
+6. Optimize with `useMemo`, `useCallback`, and memoization.
+
+## Common early mistakes
+
+- Putting hooks inside loops or conditionals.
+- Over-using `useEffect` for derived state.
+- Passing new objects as dependencies and causing infinite loops.
+- Forgetting that state updates are batched and asynchronous.
+
+## The best teachers
+
+I learned the most by reading code from real projects and building small experiments. Tutorials are useful, but nothing beats debugging a broken component at 1 AM and finally understanding why it re-rendered.
+
+## Keep going
+
+React is a large ecosystem. You do not need to know every library or pattern. Focus on the core model, write a lot of components, and the rest will follow.

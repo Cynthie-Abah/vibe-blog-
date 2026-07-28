@@ -1,0 +1,95 @@
+---
+title: Building Accessible Web Interfaces
+description: Accessibility is not a feature. It is a baseline. Here are the practical patterns I use to make interfaces work for everyone.
+date: 2026-07-10
+tags:
+  - Accessibility
+  - CSS
+  - HTML
+cover: accessibility.jpg
+featured: false
+category: Engineering
+---
+
+# Building Accessible Web Interfaces
+
+Accessibility is not a feature. It is a baseline. The web was built to work for everyone, regardless of device, connection, or ability. When we ignore accessibility, we exclude people from information and services they have every right to use.
+
+## Start with semantic HTML
+
+The most important thing you can do is use the right HTML element for the right purpose. Headings, lists, buttons, links, and form controls all carry built-in meaning for assistive technologies.
+
+```html
+<!-- Good -->
+<button type="button">Expand</button>
+<a href="/about">About</a>
+
+<!-- Avoid -->
+<div class="button" onclick="expand()">Expand</div>
+<span class="link" onclick="goTo('/about')">About</span>
+```
+
+A `<button>` is focusable, keyboard activatable, and announced correctly by default. A styled `<div>` is none of those things unless you rebuild the behavior from scratch.
+
+## Headings are a navigation tool
+
+Screen reader users often navigate by heading. A logical heading structure helps them understand the page and jump to the relevant section. Do not skip levels for styling.
+
+```html
+<h1>Building Accessible Web Interfaces</h1>
+  <h2>Semantic HTML</h2>
+  <h2>Color and Contrast</h2>
+  <h2>Keyboard Navigation</h2>
+    <h3>Focus indicators</h3>
+```
+
+## Color and contrast
+
+Color should never be the only way to convey information. A red error message should also have an icon or text. Links should be underlined or otherwise distinguishable from body text.
+
+Use a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text. Tools like the WebAIM contrast checker make this easy.
+
+## Keyboard navigation
+
+Every interactive element should be reachable and usable with a keyboard. Tab order should follow the visual order. Focus indicators should be visible.
+
+```css
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+```
+
+## Labels and form controls
+
+Every form input needs a label. Placeholders are not labels. If the design does not show a visible label, use `aria-label` or a visually hidden label.
+
+```html
+<label for="email">Email address</label>
+<input type="email" id="email" name="email" />
+```
+
+## Alt text for images
+
+Alt text describes the purpose of an image, not its appearance. If an image is decorative, use an empty `alt=""` so screen readers ignore it.
+
+```html
+<img src="chart.png" alt="Revenue grew 24% in Q2, from $1.2M to $1.5M" />
+```
+
+## Motion and preference
+
+Respect user preferences. If someone has reduced motion enabled, turn off animations or keep them subtle.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+## Accessibility is a craft
+
+Accessibility is not a checklist you complete once. It is a habit. Build it into every component, every design review, and every pull request. The result is better for everyone: clearer navigation, faster keyboard workflows, and a more robust product.

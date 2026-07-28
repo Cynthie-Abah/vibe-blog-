@@ -1,0 +1,96 @@
+---
+title: A Practical Guide to Next.js 15
+description: A concise guide to the App Router, server components, caching, and the best patterns in Next.js 15.
+date: 2026-07-25
+tags:
+  - Next.js
+  - React
+  - Performance
+cover: nextjs-guide.jpg
+featured: true
+category: Engineering
+---
+
+# A Practical Guide to Next.js 15
+
+Next.js 15 refines the App Router with better defaults, clearer caching semantics, and a tighter integration with React 19. If you are starting a new project today, it is the most productive full-stack React framework available.
+
+## The App Router mental model
+
+The App Router is built around two kinds of components:
+
+- **Server Components** — render on the server, can access backend resources directly, and ship zero JavaScript to the client.
+- **Client Components** — render on the client and can use hooks, browser APIs, and event handlers.
+
+The boundary is simple: a component is a server component by default. Add `"use client"` only when you need client-only behavior.
+
+```tsx
+// This is a Server Component by default
+async function Page() {
+  const posts = await getPosts();
+  return <PostList posts={posts} />;
+}
+```
+
+## Data fetching
+
+In Server Components, you can `await` data directly. Next.js handles streaming, deduplication, and partial rendering. The result is code that looks synchronous but runs efficiently on the server.
+
+```tsx
+export default async function Page() {
+  const data = await fetch("https://api.example.com/posts", {
+    next: { revalidate: 60 },
+  });
+  const posts = await data.json();
+
+  return <BlogList posts={posts} />;
+}
+```
+
+## Caching in Next.js 15
+
+Next.js 15 simplifies caching. The framework no longer caches `fetch` requests by default. You opt in to caching explicitly, which is less surprising and easier to debug.
+
+- `force-cache` — cache the response.
+- `no-store` — never cache.
+- `revalidate` — cache for a set number of seconds.
+
+## Layouts and nested routes
+
+Layouts are nested. A root layout wraps every page, and segment layouts wrap only the pages under that segment. This is perfect for shared chrome like sidebars or headers.
+
+```txt
+app/
+├── layout.tsx      # root layout
+├── page.tsx        # /
+├── blog/
+│   ├── layout.tsx  # /blog layout
+│   ├── page.tsx    # /blog
+│   └── [slug]/
+│       └── page.tsx # /blog/:slug
+```
+
+## Metadata and SEO
+
+The Metadata API is one of the best parts of the App Router. You can define page metadata by exporting a `metadata` object from a page or layout.
+
+```tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "My Blog",
+  description: "A fast, accessible blog.",
+  openGraph: {
+    title: "My Blog",
+    description: "A fast, accessible blog.",
+  },
+};
+```
+
+## When to use Server Actions
+
+Server Actions let you call server-side functions from forms and event handlers in Client Components. They are great for mutations, but they are not a replacement for API routes. Use them for form submissions and simple mutations that stay inside the request lifecycle.
+
+## Final thoughts
+
+Next.js 15 rewards a server-first mindset. Start with Server Components, add client interactivity only where needed, and let the framework handle caching and routing. The result is faster pages and simpler code.
