@@ -1,0 +1,94 @@
+---
+title: Building My Own Blog
+description: Why I stopped using Medium and built a custom blog with my own stack, design, and workflow.
+date: 2026-07-28
+tags:
+  - Next.js
+  - Blog
+  - TypeScript
+  - TanStack
+cover: building-my-blog.jpg
+featured: true
+category: Engineering
+---
+
+# Building My Own Blog
+
+Writing on someone else's platform means giving up control over the reading experience, design, analytics, and publishing workflow. I wanted a blog that was fast, accessible, and entirely my own, where every aspect—from typography to performance—could be tailored to my preferences.
+
+## Why I left the platforms
+
+Centralized platforms are convenient, but convenience comes with trade-offs. You inherit their design choices, their performance overhead, their paywalls, and their algorithms. A personal site removes those middlemen. The reader sees exactly what you intended.
+
+The benefits I care about most:
+
+- **Design ownership** — every spacing, color, and animation decision is mine.
+- **Performance** — no third-party scripts, no tracking bloat, no unnecessary layout shifts.
+- **Longevity** — plain Markdown files in Git outlast any platform.
+- **Workflow** — I write in my editor and publish with a commit.
+
+## The stack I chose
+
+For this build I chose a modern, edge-ready stack:
+
+| Layer | Choice |
+| --- | --- |
+| Framework | TanStack Start |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Content | Markdown / MDX |
+| Syntax | Shiki |
+| Icons | Lucide React |
+| Hosting | Lovable / Vercel ready |
+
+TanStack Start gives me file-based routing, server functions, and excellent data loading without the complexity of a full backend framework. Tailwind CSS keeps styles co-located with markup and makes iteration fast.
+
+## What makes the reading experience enjoyable
+
+A blog is not a dashboard. It should get out of the way and let the words breathe. I optimized for a few things:
+
+1. **Readable typography** — a comfortable measure, generous line height, and clear hierarchy.
+2. **Focused layout** — maximum content width of 760px so the eye does not travel too far.
+3. **Dark mode by default** — easier on the eyes for long-form reading.
+4. **Fast interactions** — instant search, smooth transitions, and no blocking loads.
+
+## Performance as a feature
+
+I set a target of 100 on Lighthouse for performance, accessibility, best practices, and SEO. That means:
+
+- Static generation where possible
+- Optimized images with lazy loading
+- Minimal JavaScript on the initial load
+- A sitemap, RSS feed, and proper Open Graph metadata
+
+```tsx
+// Example of a minimal page shell
+export default function Page() {
+  return (
+    <main className="mx-auto max-w-3xl px-6 py-12">
+      <article className="prose dark:prose-invert">
+        <h1>Hello, reader</h1>
+        <p>Less noise. More signal.</p>
+      </article>
+    </main>
+  );
+}
+```
+
+## Development phases
+
+1. Project setup and design tokens
+2. Global layout and navigation
+3. Home page and featured posts
+4. Blog listing and dynamic article pages
+5. Markdown rendering with syntax highlighting
+6. Search, tags, and categories
+7. Dark mode and theme toggle
+8. Comments, newsletter, and social sharing
+9. SEO, RSS, sitemap, and deployment
+
+## The bottom line
+
+Building a blog from scratch takes more effort than signing up for a platform. But the result is worth it: a site that feels like yours, loads instantly, and respects the people who read it.
+
+If you are considering the same move, start small. A single page, one post, and a domain you control is enough. Everything else can grow from there.

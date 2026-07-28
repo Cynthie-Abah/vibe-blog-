@@ -1,0 +1,95 @@
+---
+title: JavaScript Tips I Wish I Knew Earlier
+description: Small patterns and language features that make JavaScript code cleaner, safer, and easier to reason about.
+date: 2026-07-20
+tags:
+  - JavaScript
+  - TypeScript
+  - Tips
+cover: javascript-tips.jpg
+featured: false
+category: Engineering
+---
+
+# JavaScript Tips I Wish I Knew Earlier
+
+JavaScript is a flexible language. That flexibility is a strength, but it can also lead to messy code if you are not deliberate. Here are the patterns that made the biggest difference in my day-to-day work.
+
+## Prefer `const` by default
+
+Use `const` for everything unless you have a reason to reassign. If you do need to reassign, use `let`. Avoid `var` entirely. This makes the intent of each variable obvious.
+
+```js
+const config = { theme: "dark" };
+let count = 0;
+
+// config = {}; // Error: good
+// var x = 1;   // Avoid
+```
+
+## Destructure for readability
+
+Object and array destructuring removes noisy property access and makes function signatures clearer.
+
+```js
+const user = { name: "Alex", role: "admin" };
+const { name, role } = user;
+
+function createUser({ name, role }) {
+  return { name, role };
+}
+```
+
+## Optional chaining and nullish coalescing
+
+These two operators save you from endless defensive checks.
+
+```js
+const theme = user?.preferences?.theme ?? "light";
+```
+
+`??` only falls back on `null` or `undefined`, unlike `||`, which also falls back on `0`, `false`, and empty strings.
+
+## Use array methods
+
+Modern array methods are expressive and compose well.
+
+- `map` for transformations
+- `filter` for selections
+- `reduce` for aggregations
+- `find` for single lookups
+- `some` / `every` for boolean checks
+
+```js
+const activeUsers = users
+  .filter((u) => u.isActive)
+  .map((u) => u.name);
+```
+
+## Avoid mutating in place
+
+Functions that mutate their arguments are harder to reason about. Return new values instead.
+
+```js
+// Avoid
+function addTodo(todos, todo) {
+  todos.push(todo); // mutation
+}
+
+// Prefer
+function addTodo(todos, todo) {
+  return [...todos, todo];
+}
+```
+
+## Learn the event loop
+
+Understanding how the call stack, microtasks, and macrotasks interact will make async code predictable. Read about the event loop once, and you will avoid half the bugs in concurrent code.
+
+## Keep functions small
+
+A function should do one thing. If you have to use the word "and" to describe what it does, split it. Small functions are easier to test, name, and reuse.
+
+## Conclusion
+
+These tips are not about being clever. They are about reducing the amount of mental overhead required to read and change code. The best JavaScript is often the most boring JavaScript.
