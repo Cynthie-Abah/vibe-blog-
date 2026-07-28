@@ -17,14 +17,14 @@ const processor = unified()
   .use(rehypeShiki, { theme: "github-dark" })
   .use(rehypeStringify);
 
-export async function MarkdownRenderer({
+export function MarkdownRenderer({
   children,
   className,
 }: {
   children: string;
   className?: string;
 }) {
-  const html = await processor.process(children);
+  const html = React.use(processor.process(children));
   return (
     <div
       className={className}
