@@ -133,6 +133,108 @@
 }
 
 
+@utility prose-custom {
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--color-foreground);
+  }
+
+  & h1 { font-size: var(--text-3xl); }
+  & h2 { font-size: var(--text-2xl); }
+  & h3 { font-size: var(--text-xl); }
+  & h4 { font-size: var(--text-lg); }
+
+  & p {
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+    color: var(--color-muted-foreground);
+  }
+
+  & ul,
+  & ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  & li {
+    margin-bottom: 0.5rem;
+    color: var(--color-muted-foreground);
+  }
+
+  & strong {
+    color: var(--color-foreground);
+    font-weight: 600;
+  }
+
+  & a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  & blockquote {
+    border-left: 2px solid var(--color-border);
+    padding-left: 1rem;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+    color: var(--color-muted-foreground);
+  }
+
+  & pre {
+    margin-bottom: 1.25rem;
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    overflow-x: auto;
+    background-color: var(--color-muted);
+  }
+
+  & code {
+    font-size: 0.875em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  & pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  & :not(pre) > code {
+    background-color: var(--color-muted);
+    padding: 0.2em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+
+  & table {
+    width: 100%;
+    margin-bottom: 1.25rem;
+    border-collapse: collapse;
+  }
+
+  & th,
+  & td {
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+  }
+
+  & th {
+    font-weight: 600;
+    background-color: var(--color-muted);
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -143,3 +245,4 @@
     color: var(--color-foreground);
   }
 }
+
